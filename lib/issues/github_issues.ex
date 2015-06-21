@@ -13,10 +13,10 @@ defmodule Issues.GithubIssues do
   end
 
   def handle_response({ :ok, %HTTPoison.Response{status_code: 200, body: body}}) do
-    { :ok, Poison.decode!(body) }
+    { :ok, Poison.decode!(body, keys: :atoms) }
   end
 
-  def handle_response({ :error, %HTTPoison.Response{body: body}}) do
-    { :error, Poison.decode!(body) }
+  def handle_response({ :ok, %HTTPoison.Response{status_code: _, body: body}}) do
+    { :error, Poison.decode!(body, keys: :atoms) }
   end
 end

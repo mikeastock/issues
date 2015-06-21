@@ -21,12 +21,12 @@ defmodule CLITest do
 
   test "sort created_at asc" do
     issues = issues_list
-    assert sort_by_created_at(:asc, issues) == Enum.sort(issues)
+    assert sort_by_created_at(issues, :asc) == Enum.sort(issues)
   end
 
   test "sort created_at desc" do
     issues = issues_list
-    assert sort_by_created_at(:desc, issues) == Enum.reverse(Enum.sort(issues))
+    assert sort_by_created_at(issues, :desc) == Enum.reverse(Enum.sort(issues))
   end
 
   defp issues_list do

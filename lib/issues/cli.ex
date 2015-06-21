@@ -48,17 +48,15 @@ defmodule Issues.CLI do
   def process({user, project, count}) do
     Issues.GithubIssues.fetch(user, project)
     |> decode_response
-    |> convert_to_list_of_hashdicts
     |> sort_by_created_at(:asc)
     |> Enum.take(count)
-    |> print_table_for_columns(["number", "created_at", "title"])
+    |> print_table_for_columns([:number, :created_at, :title])
   end
 
   def decode_response({:ok, body}), do: body
 
   def decode_response({:error, body}) do
-    { _, message } = List.keyfind(body, "message", 0)
-    IO.puts "Error fetching from Github: #{message}"
+    IO.puts "Error fetching from Github: #{body["message"]}"
     System.halt(2)
   end
 
@@ -67,11 +65,11 @@ defmodule Issues.CLI do
     |> Enum.map(&Enum.into(&1, HashDict.new))
   end
 
-  def sort_by_created_at(:asc, list) do
+  def sort_by_created_at(list, :asc) do
     Enum.sort(list, fn item1, item2 -> item1.created_at <= item2.created_at end)
   end
 
-  def sort_by_created_at(:desc, list) do
+  def sort_by_created_at(list, :desc) do
     Enum.sort(list, fn item1, item2 -> item1.created_at >= item2.created_at end)
   end
 end
