@@ -26,8 +26,9 @@ defmodule Issues.Mixfile do
   # Type `mix help deps` for more examples and options
   defp deps do
     [
-      { :httpoison, "~> 0.7" },
-      { :poison, "~> 1.4.0" }
+      {:httpoison, "~> 0.7"},
+      {:poison, "~> 1.4.0"},
+      {:timex, "~> 0.14.0"}
     ]
   end
 end
